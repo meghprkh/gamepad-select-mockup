@@ -45,22 +45,6 @@ public class ValaGtk.Application : Gtk.Window {
   }
 
   [GtkCallback]
-  private void row_change () {
-    var row = list_box2.get_selected_row();
-    // Temporary hack because this event is emitted when the window is about
-    // to close leading to seg fault
-    if (!(row is Gtk.ListBoxRow)) return;
-    var to = list_box2.get_selected_row().get_index();
-    print(@"Row changed $active_player - $to!\n");
-    int other = -1;
-    for (var i = 0; i < associations.length; i++) {
-      if (associations[i] == to) { other = i; break; }
-    }
-    if (other != -1) associations[other] = associations[active_player];
-    associations[active_player] = to;
-  }
-
-  [GtkCallback]
   private void on_back_button_clicked () {
     if (state == State.CHOSE_GAMEPAD) change_state(State.CHOSE_PLAYER);
     else this.close();
@@ -68,20 +52,28 @@ public class ValaGtk.Application : Gtk.Window {
 
   private void change_state (State to, int player = -1) {
     if (to == state) return;
-    state = to;
-    active_player = player;
     switch (to) {
     case State.CHOSE_PLAYER:
+      var associate_to = list_box2.get_selected_row().get_index();
+      print(@"Row changed $active_player - $associate_to!\n");
+      int other = -1;
+      for (var i = 0; i < associations.length; i++) {
+        if (associations[i] == associate_to) { other = i; break; }
+      }
+      if (other != -1) associations[other] = associations[active_player];
+      associations[active_player] = associate_to;
       stack.transition_type = Gtk.StackTransitionType.SLIDE_RIGHT;
       label.label = "Select a player.";
       stack.set_visible_child(list_box1);
       break;
     case State.CHOSE_GAMEPAD:
       label.label = "Select your gamepad device.\n You can also press a button on your gamepad to select it.";
-      list_box2.select_row(list_box2.get_row_at_index(associations[active_player]));
+      list_box2.select_row(list_box2.get_row_at_index(associations[player]));
       stack.transition_type = Gtk.StackTransitionType.SLIDE_LEFT;
       stack.set_visible_child(list_box2);
       break;
     }
+    state = to;
+    active_player = player;
   }
 }
