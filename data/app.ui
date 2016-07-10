@@ -12,24 +12,6 @@
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkLabel" id="label">
-            <property name="can_focus">False</property>
-            <property name="margin_left">15</property>
-            <property name="margin_right">15</property>
-            <property name="margin_top">15</property>
-            <property name="margin_bottom">15</property>
-            <property name="label" translatable="yes">Select a player.</property>
-            <property name="justify">center</property>
-            <property name="wrap">True</property>
-            <property name="wrap_mode">word-char</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
           <object class="GtkButton" id="back_button">
             <property name="label">gtk-go-back</property>
             <property name="visible">True</property>
@@ -54,6 +36,7 @@
               <object class="GtkListBox" id="list_box1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="tooltip_text" translatable="yes">Select a player</property>
                 <property name="selection_mode">none</property>
                 <property name="activate_on_single_click">False</property>
               </object>
@@ -66,6 +49,7 @@
               <object class="GtkListBox" id="list_box2">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="tooltip_text" translatable="yes">Select your gamepad device. You can also press a button on your gamepad to select it.</property>
               </object>
               <packing>
                 <property name="name">page1</property>

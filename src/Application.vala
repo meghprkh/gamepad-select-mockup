@@ -11,8 +11,6 @@ public class ValaGtk.Application : Gtk.Window {
 	private Gtk.ListBox list_box2;
   [GtkChild]
 	private Gtk.Stack stack;
-  [GtkChild]
-	private Gtk.Label label;
 
   public string[] gamepads;
   public int[] associations;
@@ -68,11 +66,9 @@ public class ValaGtk.Application : Gtk.Window {
       ((Gtk.Button) list_box1.get_row_at_index(active_player).get_child()).label = get_player_string(active_player);
       ((Gtk.Button) list_box1.get_row_at_index(other).get_child()).label = get_player_string(other);
       stack.transition_type = Gtk.StackTransitionType.SLIDE_RIGHT;
-      label.label = "Select a player.";
       stack.set_visible_child(list_box1);
       break;
     case State.CHOSE_GAMEPAD:
-      label.label = "Select your gamepad device.\n You can also press a button on your gamepad to select it.";
       list_box2.select_row(list_box2.get_row_at_index(associations[player]));
       stack.transition_type = Gtk.StackTransitionType.SLIDE_LEFT;
       stack.set_visible_child(list_box2);
