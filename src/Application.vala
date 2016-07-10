@@ -36,12 +36,15 @@ public class ValaGtk.Application : Gtk.Window {
     }
 
     for (var i = 0; i < associations.length; i++) {
-      print(@"Initializing Association $(i+1) - $(associations[i])\n");
-      var button = new Gtk.Button.with_label(@"Player $(i+1)");
+      var button = new Gtk.Button.with_label(get_player_string(i));
       var i_copy = i;
       button.clicked.connect(() => change_state(State.CHOSE_GAMEPAD, i_copy));
       list_box1.add(button);
     }
+  }
+
+  private string get_player_string (int player) {
+    return @"Player $(player+1) - $(gamepads[associations[player]])";
   }
 
   [GtkCallback]
@@ -62,6 +65,8 @@ public class ValaGtk.Application : Gtk.Window {
       }
       if (other != -1) associations[other] = associations[active_player];
       associations[active_player] = associate_to;
+      ((Gtk.Button) list_box1.get_row_at_index(active_player).get_child()).label = get_player_string(active_player);
+      ((Gtk.Button) list_box1.get_row_at_index(other).get_child()).label = get_player_string(other);
       stack.transition_type = Gtk.StackTransitionType.SLIDE_RIGHT;
       label.label = "Select a player.";
       stack.set_visible_child(list_box1);
