@@ -25,7 +25,7 @@ public class ValaGtk.Application : Gtk.Window {
     this.destroy.connect(() => {
       print(@"\n\nAssociations : $(associations.length)\n");
       for (var i = 0; i < associations.length; i++) {
-        print(@"Player $(i+1) - $(associations[i])\n");
+        print(@"Player $(i+1) - $(associations[i]) - $(gamepads[associations[i]])\n");
       }
     });
 
