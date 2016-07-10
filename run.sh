@@ -1,8 +1,12 @@
 #!/usr/bin/sh
 
-rm -r build
-mkdir build
-meson build
-cd build
-ninja-build
-./src/valagtk
+if [ ! -z $1 ]; then
+  rm -r build
+fi
+
+if ! [ -d build ]; then
+  mkdir build
+  meson build
+fi
+
+cd build && ninja-build && ./src/valagtk
